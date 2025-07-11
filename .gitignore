@@ -1,0 +1,27 @@
+# Archivos generados por bookdown
+_book/
+_bookdown_files/
+
+# Archivos de R/RStudio
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# Resultados de compilación
+*.html
+*.pdf
+*.epub
+*.log
+
+# Archivos temporales y del sistema
+.DS_Store
+*.aux
+*.out
+*.toc
+*.bak
+Thumbs.db
+
+# Carpeta de paquetes renv (si usas)
+renv/
