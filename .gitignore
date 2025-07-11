@@ -25,3 +25,6 @@ Thumbs.db
 
 # Carpeta de paquetes renv (si usas)
 renv/
+.Rdata
+.httr-oauth
+.quarto
