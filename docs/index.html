@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Apuestas</title>
+  <meta name="description" content="Modelamiento de eventos de Parlay con procesos de ramificación" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Apuestas" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Modelamiento de eventos de Parlay con procesos de ramificación" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Apuestas" />
+  
+  <meta name="twitter:description" content="Modelamiento de eventos de Parlay con procesos de ramificación" />
+  
+
+<meta name="author" content="Bryan Jácome" />
+
+
+<meta name="date" content="2025-07-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Modelado con procesos de ramificación</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="#análisis-de-un-juego-de-lotería"><i class="fa fa-check"></i><b>1</b> Análisis de un juego de lotería</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="#distribución-de-ganancias-netas"><i class="fa fa-check"></i><b>1.1</b> Distribución de ganancias netas</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="#estrategia-de-parlaying-y-proceso-de-ramificación"><i class="fa fa-check"></i><b>1.2</b> Estrategia de <em>parlaying</em> y proceso de ramificación</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="#distribución-de-la-duración-del-proceso-t"><i class="fa fa-check"></i><b>1.3</b> Distribución de la duración del proceso <span class="math inline">\(T\)</span></a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="#incremento-en-la-probabilidad-de-ganar-el-gran-premio"><i class="fa fa-check"></i><b>1.4</b> Incremento en la probabilidad de ganar el gran premio</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Apuestas</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Apuestas</h1>
+<p class="author"><em>Bryan Jácome</em></p>
+<p class="date"><em>2025-07-18</em></p>
+</div>
+<div id="análisis-de-un-juego-de-lotería" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Análisis de un juego de lotería<a href="#análisis-de-un-juego-de-lotería" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>En una lotería, tres números ganadores son seleccionados uniformemente al azar de <span class="math inline">\(\{1,\ldots,100\}\)</span>, muestreando sin reemplazo. Los boletos cuestan $1 y permiten escoger tres números. Si un jugador coincide con los tres números ganadores, gana $1000. Si coincide con dos números, gana $15. Si coincide con uno, gana $3.</p>
+<div id="distribución-de-ganancias-netas" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Distribución de ganancias netas<a href="#distribución-de-ganancias-netas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Definimos <span class="math inline">\(N \sim \text{Hypergeometric}(100, 3, 3)\)</span>, que representa la cantidad de aciertos en el boleto del jugador.</p>
+<p>La ganancia neta se define como:</p>
+<p><span class="math display">\[
+\mathbb{G} = 1000 \cdot\mathbb{1}_{(N = 3)} + 15\cdot\mathbb{1}_{(N = 2)} + 3\cdot\mathbb{1}_{(N = 1)} - 1.
+\]</span></p>
+<p>Entonces, la esperanza matemática de la ganancia neta es:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}(\mathbb{G}) &amp;= 1000\cdot\mathbb{P}(N = 3) + 15\cdot\mathbb{P}(N = 2) + 3\cdot\mathbb{P}(N = 1) - 1 \\
+&amp;= -0.708.
+\end{aligned}
+\]</span></p>
+<p>Es decir, el valor esperado del juego es de <span class="math inline">\(-70.8\)</span> centavos.</p>
+</div>
+<div id="estrategia-de-parlaying-y-proceso-de-ramificación" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Estrategia de <em>parlaying</em> y proceso de ramificación<a href="#estrategia-de-parlaying-y-proceso-de-ramificación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suponga que un jugador que coincide con uno o dos números apuesta sus ganancias comprando respectivamente 3 o 15 boletos adicionales. El número de boletos obtenidos puede verse como un proceso de ramificación. Sea <span class="math inline">\(Y\)</span> el número de boletos en la siguiente generación:</p>
+<p><span class="math display">\[
+Y = 3\cdot\mathbb{1}_{(N = 1)} + 15\cdot\mathbb{1}_{(N = 2)}.
+\]</span></p>
+<p>La media de la distribución de descendencia es:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}(Y) &amp;= 3 \cdot \mathbb{P}(N = 1) + 15 \cdot \mathbb{P}(N = 2) \\
+&amp;= 0.28613.
+\end{aligned}
+\]</span></p>
+<p>Dado que <span class="math inline">\(\mu = \mathbb{E}(Y) &lt; 1\)</span>, el proceso es subcrítico.</p>
+</div>
+<div id="distribución-de-la-duración-del-proceso-t" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Distribución de la duración del proceso <span class="math inline">\(T\)</span><a href="#distribución-de-la-duración-del-proceso-t" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La duración <span class="math inline">\(T\)</span> es la longitud de la serie de apuestas. Sea <span class="math inline">\(G(s)\)</span> la función generadora de probabilidad de <span class="math inline">\(Y\)</span>:</p>
+<p><span class="math display">\[
+G(s) = \mathbb{P}(N=0 \cup N=3) + \mathbb{P}(N=1) \cdot s^3 + \mathbb{P}(N=2) \cdot s^{15}.
+\]</span></p>
+<p>Aproximadamente:</p>
+<p><span class="math display">\[
+G(s) \approx 0.9118182 + 0.08638219 s^3 + 0.001799629 s^{15}.
+\]</span></p>
+<p>La función generadora iterada está dada por <span class="math inline">\(G_{n}(0) = G(G_{n-1}(0))\)</span>, y con esto calculamos:</p>
+<p><span class="math display">\[
+\begin{aligned}
+G_0(0) &amp;= 0, \\
+G_1(0) &amp;= G(0) = 0.9118182, \\
+G_2(0) &amp;= G(G_1(0)) \approx G(0.9118182) = 0.97785, \\
+G_3(0) &amp;= G(G_2(0)) \approx G(0.97785) = 0.99374, \\
+G_4(0) &amp;= G(G_3(0)) \approx G(0.99374) = 0.99822.
+\end{aligned}
+\]</span></p>
+<p>Por lo tanto, la distribución de <span class="math inline">\(T\)</span> es:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{P}(T = 1) &amp;= G_1(0) - G_0(0) = 0.91181, \\
+\mathbb{P}(T = 2) &amp;= G_2(0) - G_1(0) = 0.06604, \\
+\mathbb{P}(T = 3) &amp;= G_3(0) - G_2(0) = 0.01589, \\
+\mathbb{P}(T = 4) &amp;= G_4(0) - G_3(0) = 0.00448.
+\end{aligned}
+\]</span></p>
+</div>
+<div id="incremento-en-la-probabilidad-de-ganar-el-gran-premio" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Incremento en la probabilidad de ganar el gran premio<a href="#incremento-en-la-probabilidad-de-ganar-el-gran-premio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Sea <span class="math inline">\(p\)</span> la probabilidad de acertar los tres números:</p>
+<p><span class="math display">\[
+p = \mathbb{P}(N = 3) = 6.184292 \times 10^{-6}.
+\]</span></p>
+<p>Con <span class="math inline">\(\mu = 0.28613\)</span>, la probabilidad de que un solo boleto <em>parlayed</em> gane el gran premio es:</p>
+<p><span class="math display">\[
+b = \frac{p}{1 - \mu} = \frac{6.184292 \times 10^{-6}}{1 - 0.28613} \approx 8.661 \times 10^{-6}.
+\]</span></p>
+<p>El incremento relativo es:</p>
+<p><span class="math display">\[
+\frac{b - p}{p} = \frac{8.661 \times 10^{-6} - 6.184 \times 10^{-6}}{6.184 \times 10^{-6}} \approx 0.4005.
+\]</span></p>
+<p>Por tanto, la estrategia de <em>parlaying</em> aumenta la probabilidad de ganar el gran premio en algo más del 40%.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/USERNAME/REPO/edit/BRANCH/index.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
